@@ -1,111 +1,134 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Mim Mart | Ladies Fashion Showroom</title>
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: Arial, sans-serif; color: #333; line-height: 1.6; }
-header { background: #e91e8c; color: #fff; padding: 16px 40px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
-header h1 { font-size: 26px; letter-spacing: 1px; }
-nav a { color: #fff; text-decoration: none; margin-left: 24px; font-weight: bold; }
-nav a:hover { text-decoration: underline; }
-.hero { background: linear-gradient(135deg, #ffd1e8, #ff8fc7); text-align: center; padding: 90px 20px; }
-.hero h2 { font-size: 44px; color: #8a0f52; }
-.hero p { font-size: 20px; margin: 16px 0 28px; color: #5a0a35; }
-.btn { background: #e91e8c; color: #fff; padding: 14px 32px; border-radius: 30px; text-decoration: none; font-weight: bold; display: inline-block; border: none; cursor: pointer; font-size: 16px; }
-.btn:hover { background: #c2177a; }
-section { padding: 60px 40px; max-width: 1100px; margin: auto; }
-section h2 { text-align: center; color: #e91e8c; margin-bottom: 30px; font-size: 32px; }
-.categories, .products { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
-.card { background: #fff0f7; border-radius: 16px; padding: 30px 20px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-.card h3 { color: #c2177a; margin-bottom: 8px; }
-.product img { width: 100%; height: 340px; object-fit: cover; border-radius: 12px; margin-bottom: 12px; }
-.price { color: #e91e8c; font-weight: bold; font-size: 18px; margin-bottom: 12px; }
-.order-btn { background: #e91e8c; color: #fff; border: none; padding: 10px 24px; border-radius: 24px; font-weight: bold; cursor: pointer; font-size: 15px; }
-.order-btn:hover { background: #c2177a; }
-.about { background: #fff0f7; max-width: none; }
-.about p { max-width: 800px; margin: auto; text-align: center; font-size: 18px; }
-.contact { text-align: center; }
-.contact p { margin: 8px 0; font-size: 18px; }
-footer { background: #8a0f52; color: #fff; text-align: center; padding: 20px; }
-.modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); z-index: 100; align-items: center; justify-content: center; padding: 16px; }
-.modal.open { display: flex; }
-.modal-box { background: #fff; border-radius: 16px; padding: 28px 24px; width: 100%; max-width: 420px; max-height: 95vh; overflow-y: auto; }
-.modal-box h3 { color: #e91e8c; margin-bottom: 6px; text-align: center; }
-.modal-box .sel { text-align: center; margin-bottom: 16px; color: #555; }
-.modal-box label { display: block; font-weight: bold; margin-top: 12px; }
-.modal-box input, .modal-box textarea { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 8px; font-size: 16px; margin-top: 4px; }
-.modal-actions { display: flex; gap: 10px; margin-top: 18px; }
-.modal-actions .btn { flex: 1; text-align: center; padding: 12px; }
-.cancel { background: #999; }
-.cancel:hover { background: #777; }
-@media (max-width: 600px) { header { flex-direction: column; } nav a { margin: 0 10px; } .hero h2 { font-size: 30px; } }
+:root{--pink:#e91e8c;--deep:#8a0f52;--ink:#14161f;--soft:#fff0f7;--gold:#f5b942}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:system-ui,"Noto Sans Bengali",Arial,sans-serif;color:#222;background:#fff;line-height:1.5}
+a{color:inherit;text-decoration:none}
+section{scroll-margin-top:70px}
+.top{background:var(--ink);color:#fff;padding:11px 16px;font-weight:700;font-size:14px;display:flex;align-items:center;gap:8px}
+.top i{font-style:normal;color:var(--gold)}
+header{position:sticky;top:0;z-index:50;background:#fff;display:flex;align-items:center;justify-content:space-between;padding:8px 12px;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+.ib{background:none;border:0;font-size:26px;width:46px;height:46px;cursor:pointer;color:var(--ink)}
+.logo{font-size:30px;font-weight:800;color:var(--pink);letter-spacing:-.5px}
+.logo b{color:var(--ink);font-weight:800}
+.drawer{display:none;position:fixed;inset:0;z-index:90;background:rgba(0,0,0,.55)}
+.drawer.open{display:block}
+.drawer nav{background:#fff;width:78%;max-width:320px;height:100%;padding:20px 24px}
+.drawer a{display:block;padding:15px 0;font-weight:700;border-bottom:1px solid #eee}
+.drawer .x{float:right;font-size:28px;background:none;border:0;cursor:pointer}
+.banner{margin:16px;border-radius:18px;overflow:hidden;display:flex;align-items:stretch;background:linear-gradient(135deg,#ffd1e8,#ff8fc7);min-height:230px}
+.banner div{flex:1;padding:22px 16px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start}
+.banner h1{font-size:27px;line-height:1.15;color:var(--deep);margin-bottom:8px}
+.banner p{color:#5a0a35;margin-bottom:16px}
+.banner img{width:42%;object-fit:cover}
+.btn{display:inline-block;background:var(--pink);color:#fff;padding:12px 26px;border-radius:30px;font-weight:700;border:0;cursor:pointer;font-size:15px}
+.btn:hover,.ob:hover{background:#c2177a}
+.title{display:flex;align-items:center;gap:14px;padding:0 16px;margin:34px 0 16px}
+.title:before,.title:after{content:"";flex:1;height:1px;background:#cfcfcf}
+.title h2{font-size:23px;color:var(--ink)}
+.cats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:0 16px}
+.cat{position:relative;border-radius:16px;overflow:hidden;aspect-ratio:1}
+.cat img{width:100%;height:100%;object-fit:cover}
+.cat span{position:absolute;top:10px;left:50%;transform:translateX(-50%);background:rgba(255,255,255,.9);padding:2px 14px;border-radius:20px;font-size:13px;font-weight:700;white-space:nowrap}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px 12px;padding:0 16px}
+.pc{position:relative}
+.pc img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:8px;display:block}
+.badge{position:absolute;top:10px;left:0;background:var(--ink);color:#fff;padding:6px 12px;font-weight:700;font-size:14px;z-index:2}
+.pc h3{font-size:15px;font-weight:600;margin-top:8px;line-height:1.3}
+.price{font-size:21px;font-weight:800;color:var(--ink)}
+.ob{width:100%;margin-top:8px;background:var(--pink);color:#fff;border:0;padding:12px;border-radius:8px;font-weight:700;font-size:15px;cursor:pointer}
+.show{margin:36px 16px 0;border-radius:18px;background:var(--ink);color:#fff;padding:28px 20px;text-align:center}
+.show h2{font-size:24px;margin-bottom:10px}
+.show p{margin:6px 0;color:#e5e7ee}
+.show .btn{margin-top:16px}
+footer{margin-top:36px;background:var(--deep);color:#fff;text-align:center;padding:20px;font-size:14px}
+.modal{display:none;position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.6);align-items:center;justify-content:center;padding:16px}
+.modal.open{display:flex}
+.mb{background:#fff;border-radius:16px;padding:26px 22px;width:100%;max-width:420px;max-height:95vh;overflow-y:auto}
+.mb h3{color:var(--pink);text-align:center;font-size:22px}
+.mb .sel{text-align:center;color:#555;margin-bottom:12px}
+.mb label{display:block;font-weight:700;margin-top:12px}
+.mb input,.mb textarea{width:100%;padding:11px;border:1px solid #ccc;border-radius:8px;font-size:16px;margin-top:4px;font-family:inherit}
+.acts{display:flex;gap:10px;margin-top:18px}
+.acts .btn{flex:1;text-align:center;padding:12px}
+.cancel{background:#8a8f9c}
+@media(min-width:700px){.cats{grid-template-columns:repeat(4,1fr)}.grid{grid-template-columns:repeat(4,1fr)}.banner h1{font-size:40px}}
 </style>
 </head>
 <body>
 
+<div class="top"><i>&#9679;</i> <a href="#contact">STORE LOCATIONS</a></div>
+
 <header>
-  <h1>Mim Mart</h1>
-  <nav>
-    <a href="#home">Home</a>
-    <a href="#categories">Categories</a>
-    <a href="#products">New Arrivals</a>
-    <a href="#about">About</a>
-    <a href="#contact">Contact</a>
-  </nav>
+  <button class="ib" id="openMenu" aria-label="Menu">&#9776;</button>
+  <a class="logo" href="#top">Mim <b>Mart</b></a>
+  <a class="ib" href="https://wa.me/8801740240628" aria-label="WhatsApp" style="text-align:center;line-height:46px">&#128172;</a>
 </header>
 
-<div class="hero" id="home">
-  <h2>Elegant Fashion for Every Woman</h2>
-  <p>Discover the latest ladies dresses at Mim Mart</p>
-  <a class="btn" href="#products">Shop Now</a>
+<div class="drawer" id="drawer">
+  <nav>
+    <button class="x" id="closeMenu" aria-label="Close">&times;</button>
+    <a href="#categories">Categories</a>
+    <a href="#products">New Arrivals</a>
+    <a href="#contact">Showroom</a>
+    <a href="https://wa.me/8801740240628">WhatsApp</a>
+  </nav>
+</div>
+
+<main id="top">
+<div class="banner">
+  <div>
+    <h1>Elegant Fashion for Every Woman</h1>
+    <p>Discover the latest ladies dresses at Mim Mart</p>
+    <a class="btn" href="#products">Shop Now</a>
+  </div>
+  <img src="dress2.jpg" alt="Mim Mart collection">
 </div>
 
 <section id="categories">
-  <h2>Our Categories</h2>
-  <div class="categories">
-    <div class="card"><h3>Three Piece</h3><p>Stylish sets for every occasion</p></div>
-    <div class="card"><h3>Kurti</h3><p>Comfortable daily wear</p></div>
-    <div class="card"><h3>Saree</h3><p>Traditional and party sarees</p></div>
-    <div class="card"><h3>Party Wear</h3><p>Look stunning at any event</p></div>
+  <div class="title"><h2>TOP CATEGORIES</h2></div>
+  <div class="cats">
+    <a class="cat" href="#products"><img src="dress1.jpg" alt="Three Piece"><span>THREE PIECE</span></a>
+    <a class="cat" href="#products"><img src="dress2.jpg" alt="Kurti"><span>KURTI</span></a>
+    <a class="cat" href="#products"><img src="dress3.jpg" alt="Saree"><span>SAREE</span></a>
+    <a class="cat" href="#products"><img src="FB_IMG_1779716611770.jpg" alt="Party Wear"><span>PARTY WEAR</span></a>
   </div>
 </section>
 
 <section id="products">
-  <h2>New Arrivals</h2>
-  <div class="products">
-    <div class="card product"><img src="dress1.jpg" alt="Sky Blue Three Piece"><h3>Aganur Sky Blue Three Piece</h3><p class="price">Tk 2,450</p><button class="order-btn" data-name="Aganur Sky Blue Three Piece" data-price="Tk 2,450">Order Now</button></div>
-    <div class="card product"><img src="dress2.jpg" alt="Orange Three Piece"><h3>Aganur Orange Three Piece</h3><p class="price">Tk 2,450</p><button class="order-btn" data-name="Aganur Orange Three Piece" data-price="Tk 2,450">Order Now</button></div>
-    <div class="card product"><img src="dress3.jpg" alt="Pink Three Piece"><h3>Aganur Pink Three Piece</h3><p class="price">Tk 2,450</p><button class="order-btn" data-name="Aganur Pink Three Piece" data-price="Tk 2,450">Order Now</button></div>
-    <div class="card product"><img src="FB_IMG_1779716611770.jpg" alt="Garara"><h3>গারারা</h3><p class="price">Tk 4,350</p><button class="order-btn" data-name="গারারা" data-price="Tk 4,350">Order Now</button></div>
+  <div class="title"><h2>NEW ARRIVALS</h2></div>
+  <div class="grid">
+    <div class="pc"><span class="badge">New</span><img src="dress1.jpg" alt="Aganur Sky Blue Three Piece"><h3>Aganur Sky Blue Three Piece</h3><p class="price">2,450৳</p><button class="ob" data-name="Aganur Sky Blue Three Piece" data-price="2,450৳">Order Now</button></div>
+    <div class="pc"><span class="badge">New</span><img src="dress2.jpg" alt="Aganur Orange Three Piece"><h3>Aganur Orange Three Piece</h3><p class="price">2,450৳</p><button class="ob" data-name="Aganur Orange Three Piece" data-price="2,450৳">Order Now</button></div>
+    <div class="pc"><span class="badge">New</span><img src="dress3.jpg" alt="Aganur Pink Three Piece"><h3>Aganur Pink Three Piece</h3><p class="price">2,450৳</p><button class="ob" data-name="Aganur Pink Three Piece" data-price="2,450৳">Order Now</button></div>
+    <div class="pc"><span class="badge">New</span><img src="FB_IMG_1779716611770.jpg" alt="গারারা"><h3>গারারা</h3><p class="price">4,350৳</p><button class="ob" data-name="গারারা" data-price="4,350৳">Order Now</button></div>
   </div>
 </section>
 
-<section class="about" id="about">
-  <h2>About Mim Mart</h2>
-  <p>Mim Mart is a ladies fashion showroom offering quality dresses at fair prices. We bring you the latest designs, beautiful fabrics and friendly service, all under one roof.</p>
-</section>
-
-<section class="contact" id="contact">
-  <h2>Visit or Contact Us</h2>
-  <p>Address: Khulna Shopping Complex, Dak Bangla Mor, Khulna</p>
+<section class="show" id="contact">
+  <h2>Visit Our Showroom</h2>
+  <p>Khulna Shopping Complex, Dak Bangla Mor, Khulna</p>
   <p>Phone / WhatsApp: 01740-240628</p>
-  <p>Open: Every day, 10:00 AM to 9:00 PM</p>
-  <br>
+  <p>Open every day, 10:00 AM to 9:00 PM</p>
   <a class="btn" href="https://wa.me/8801740240628">Chat on WhatsApp</a>
 </section>
+</main>
 
 <footer>&copy; 2026 Mim Mart. All rights reserved.</footer>
 
 <div class="modal" id="orderModal">
-  <div class="modal-box">
+  <div class="mb">
     <h3>অর্ডার করুন</h3>
     <p class="sel" id="selText"></p>
-    <form name="order" method="POST" action="/thanks" data-netlify="true" netlify-honeypot="bot-field">
+    <form name="order" method="POST" action="/thanks.html" data-netlify="true" netlify-honeypot="bot-field">
       <input type="hidden" name="form-name" value="order">
-      <p hidden><label>Don't fill this out: <input name="bot-field"></label></p>
+      <p hidden><label>Leave this empty <input name="bot-field"></label></p>
       <input type="hidden" name="product" id="fProduct">
       <input type="hidden" name="price" id="fPrice">
       <label for="fName">আপনার নাম</label>
@@ -114,7 +137,7 @@ footer { background: #8a0f52; color: #fff; text-align: center; padding: 20px; }
       <input type="tel" name="phone" id="fPhone" required>
       <label for="fAddress">পূর্ণ ঠিকানা</label>
       <textarea name="address" id="fAddress" rows="3" required></textarea>
-      <div class="modal-actions">
+      <div class="acts">
         <button type="button" class="btn cancel" id="closeModal">বাতিল</button>
         <button type="submit" class="btn">অর্ডার পাঠান</button>
       </div>
@@ -123,24 +146,21 @@ footer { background: #8a0f52; color: #fff; text-align: center; padding: 20px; }
 </div>
 
 <script>
-  var modal = document.getElementById('orderModal');
-  var buttons = document.querySelectorAll('.order-btn');
-  for (var i = 0; i < buttons.length; i++) {
-    buttons[i].addEventListener('click', function () {
-      var n = this.getAttribute('data-name');
-      var p = this.getAttribute('data-price');
-      document.getElementById('fProduct').value = n;
-      document.getElementById('fPrice').value = p;
-      document.getElementById('selText').textContent = n + ' - ' + p;
+  var modal=document.getElementById('orderModal'),drawer=document.getElementById('drawer');
+  document.querySelectorAll('.ob').forEach(function(b){
+    b.addEventListener('click',function(){
+      var n=b.getAttribute('data-name'),p=b.getAttribute('data-price');
+      document.getElementById('fProduct').value=n;
+      document.getElementById('fPrice').value=p;
+      document.getElementById('selText').textContent=n+' - '+p;
       modal.classList.add('open');
     });
-  }
-  document.getElementById('closeModal').addEventListener('click', function () {
-    modal.classList.remove('open');
   });
-  modal.addEventListener('click', function (e) {
-    if (e.target === modal) { modal.classList.remove('open'); }
-  });
+  document.getElementById('closeModal').onclick=function(){modal.classList.remove('open')};
+  modal.addEventListener('click',function(e){if(e.target===modal)modal.classList.remove('open')});
+  document.getElementById('openMenu').onclick=function(){drawer.classList.add('open')};
+  document.getElementById('closeMenu').onclick=function(){drawer.classList.remove('open')};
+  drawer.addEventListener('click',function(e){if(e.target===drawer||e.target.tagName==='A')drawer.classList.remove('open')});
 </script>
 
 </body>
