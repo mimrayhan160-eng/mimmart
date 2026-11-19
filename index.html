@@ -99,20 +99,11 @@ footer { background: #8a0f52; color: #fff; text-align: center; padding: 20px; }
 
 <footer>&copy; 2026 Mim Mart. All rights reserved.</footer>
 
-<form name="order" method="POST" data-netlify="true" netlify-honeypot="bot-field" hidden>
-  <input type="text" name="product">
-  <input type="text" name="price">
-  <input type="text" name="name">
-  <input type="text" name="phone">
-  <textarea name="address"></textarea>
-  <input type="text" name="bot-field">
-</form>
-
 <div class="modal" id="orderModal">
   <div class="modal-box">
     <h3>অর্ডার করুন</h3>
     <p class="sel" id="selText"></p>
-    <form name="order" method="POST" action="/thanks.html" data-netlify="true" netlify-honeypot="bot-field">
+    <form name="order" method="POST" action="/thanks" data-netlify="true" netlify-honeypot="bot-field">
       <input type="hidden" name="form-name" value="order">
       <p hidden><label>Don't fill this out: <input name="bot-field"></label></p>
       <input type="hidden" name="product" id="fProduct">
