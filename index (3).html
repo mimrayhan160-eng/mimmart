@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mim Mart | Ladies Fashion Showroom</title>
+<style>
+:root{--pink:#e91e8c;--deep:#8a0f52;--ink:#14161f;--soft:#fff0f7;--gold:#f5b942}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:system-ui,"Noto Sans Bengali",Arial,sans-serif;color:#222;background:#fff;line-height:1.5}
+a{color:inherit;text-decoration:none}
+section{scroll-margin-top:70px}
+.top{background:var(--ink);color:#fff;padding:11px 16px;font-weight:700;font-size:14px;display:flex;align-items:center;gap:8px}
+.top i{font-style:normal;color:var(--gold)}
+header{position:sticky;top:0;z-index:50;background:#fff;display:flex;align-items:center;justify-content:space-between;padding:8px 12px;box-shadow:0 2px 10px rgba(0,0,0,.08)}
+.ib{background:none;border:0;font-size:26px;width:46px;height:46px;cursor:pointer;color:var(--ink)}
+.hr{display:flex;align-items:center}
+.logo{font-size:30px;font-weight:800;color:var(--pink);letter-spacing:-.5px}
+.logo b{color:var(--ink);font-weight:800}
+.acct{background:var(--pink);color:#fff;border:0;border-radius:20px;padding:8px 14px;font-weight:700;font-size:14px;cursor:pointer;margin-right:2px;max-width:110px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.acct.in{background:var(--ink)}
+.drawer{display:none;position:fixed;inset:0;z-index:90;background:rgba(0,0,0,.55)}
+.drawer.open{display:block}
+.drawer nav{background:#fff;width:78%;max-width:320px;height:100%;padding:20px 24px}
+.drawer a,.drawer .dl{display:block;padding:15px 0;font-weight:700;border-bottom:1px solid #eee;background:none;border-left:0;border-right:0;border-top:0;width:100%;text-align:left;font-size:16px;font-family:inherit;cursor:pointer}
+.drawer .x{float:right;font-size:28px;background:none;border:0;cursor:pointer;width:auto;padding:0;border-bottom:0}
+.banner{margin:16px;border-radius:18px;overflow:hidden;display:flex;align-items:stretch;background:linear-gradient(135deg,#ffd1e8,#ff8fc7);min-height:230px}
+.banner div{flex:1;padding:22px 16px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start}
+.banner h1{font-size:27px;line-height:1.15;color:var(--deep);margin-bottom:8px}
+.banner p{color:#5a0a35;margin-bottom:16px}
+.banner img{width:42%;object-fit:cover}
+.btn{display:inline-block;background:var(--pink);color:#fff;padding:12px 26px;border-radius:30px;font-weight:700;border:0;cursor:pointer;font-size:15px}
+.btn:hover,.ob:hover{background:#c2177a}
+.title{display:flex;align-items:center;gap:14px;padding:0 16px;margin:34px 0 16px}
+.title:before,.title:after{content:"";flex:1;height:1px;background:#cfcfcf}
+.title h2{font-size:23px;color:var(--ink)}
+.cats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;padding:0 16px}
+.cat{position:relative;border-radius:16px;overflow:hidden;aspect-ratio:1}
+.cat img{width:100%;height:100%;object-fit:cover}
+.cat span{position:absolute;top:10px;left:50%;transform:translateX(-50%);background:rgba(255,255,255,.9);padding:2px 14px;border-radius:20px;font-size:13px;font-weight:700;white-space:nowrap}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px 12px;padding:0 16px}
+.pc{position:relative}
+.pc img{width:100%;aspect-ratio:3/4;object-fit:cover;border-radius:8px;display:block}
+.badge{position:absolute;top:10px;left:0;background:var(--ink);color:#fff;padding:6px 12px;font-weight:700;font-size:14px;z-index:2}
+.pc h3{font-size:15px;font-weight:600;margin-top:8px;line-height:1.3}
+.price{font-size:21px;font-weight:800;color:var(--ink)}
+.old{text-decoration:line-through;color:#888;font-size:15px;font-weight:600;margin-left:6px}
+.off{position:absolute;top:10px;right:0;background:var(--pink);color:#fff;padding:6px 10px;font-weight:700;font-size:13px;z-index:2;border-radius:6px 0 0 6px}
+.ob{width:100%;margin-top:8px;background:var(--pink);color:#fff;border:0;padding:12px;border-radius:8px;font-weight:700;font-size:15px;cursor:pointer}
+.show{margin:36px 16px 0;border-radius:18px;background:var(--ink);color:#fff;padding:28px 20px;text-align:center}
+.show h2{font-size:24px;margin-bottom:10px}
+.show p{margin:6px 0;color:#e5e7ee}
+.show .btn{margin-top:16px}
+footer{margin-top:36px;background:var(--deep);color:#fff;text-align:center;padding:20px;font-size:14px}
+.modal{display:none;position:fixed;inset:0;z-index:100;background:rgba(0,0,0,.6);align-items:center;justify-content:center;padding:16px}
+.modal.open{display:flex}
+.mb{background:#fff;border-radius:16px;padding:26px 22px;width:100%;max-width:420px;max-height:95vh;overflow-y:auto}
+.mb h3{color:var(--pink);text-align:center;font-size:22px}
+.mb .sel{text-align:center;color:#555;margin-bottom:12px}
+.mb label{display:block;font-weight:700;margin-top:12px}
+.mb input,.mb textarea{width:100%;padding:11px;border:1px solid #ccc;border-radius:8px;font-size:16px;margin-top:4px;font-family:inherit}
+.acts{display:flex;gap:10px;margin-top:18px}
+.acts .btn{flex:1;text-align:center;padding:12px}
+.cancel{background:#8a8f9c}
+.tabs{display:flex;gap:8px;margin:14px 0 4px}
+.tabs button{flex:1;padding:10px;border:1px solid var(--pink);background:#fff;color:var(--pink);border-radius:8px;font-weight:700;font-size:15px;cursor:pointer;font-family:inherit}
+.tabs button.on{background:var(--pink);color:#fff}
+.msg{margin-top:12px;font-size:14px;text-align:center;min-height:20px}
+.msg.err{color:#c62828}
+.msg.ok{color:#2e7d32}
+.link{background:none;border:0;color:var(--pink);font-weight:700;cursor:pointer;font-size:14px;margin-top:12px;width:100%;font-family:inherit}
+.hide{display:none!important}
+@media(min-width:700px){.cats{grid-template-columns:repeat(4,1fr)}.grid{grid-template-columns:repeat(4,1fr)}.banner h1{font-size:40px}}
+</style>
+</head>
+<body>
+
+<div class="top"><i>&#9679;</i> <a href="#contact">STORE LOCATIONS</a></div>
+
+<header>
+  <button class="ib" id="openMenu" aria-label="Menu">&#9776;</button>
+  <a class="logo" href="#top">Mim <b>Mart</b></a>
+  <div class="hr">
+    <button class="acct" id="acctBtn">Login</button>
+    <a class="ib" href="https://wa.me/8801740240628" aria-label="WhatsApp" style="text-align:center;line-height:46px">&#128172;</a>
+  </div>
+</header>
+
+<div class="drawer" id="drawer">
+  <nav>
+    <button class="x" id="closeMenu" aria-label="Close">&times;</button>
+    <a href="#categories">Categories</a>
+    <a href="#products">New Arrivals</a>
+    <a href="#contact">Showroom</a>
+    <a href="https://wa.me/8801740240628">WhatsApp</a>
+    <button class="dl" id="drawerAcct">Login / Sign up</button>
+  </nav>
+</div>
+
+<main id="top">
+<div class="banner">
+  <div>
+    <h1>Elegant Fashion for Every Woman</h1>
+    <p>Discover the latest ladies dresses at Mim Mart</p>
+    <a class="btn" href="#products">Shop Now</a>
+  </div>
+  <img src="dress2.jpg" alt="Mim Mart collection">
+</div>
+
+<section id="categories">
+  <div class="title"><h2>TOP CATEGORIES</h2></div>
+  <div class="cats">
+    <a class="cat" href="#products"><img src="dress1.jpg" alt="Three Piece"><span>THREE PIECE</span></a>
+    <a class="cat" href="#products"><img src="dress2.jpg" alt="Kurti"><span>KURTI</span></a>
+    <a class="cat" href="#products"><img src="dress3.jpg" alt="Saree"><span>SAREE</span></a>
+    <a class="cat" href="#products"><img src="FB_IMG_1779716611770.jpg" alt="Party Wear"><span>PARTY WEAR</span></a>
+  </div>
+</section>
+
+<section id="products">
+  <div class="title"><h2>NEW ARRIVALS</h2></div>
+  <div class="grid">
+    <div class="pc"><span class="badge">New</span><span class="off">-20%</span><img src="dress1.jpg" alt="Aganur Sky Blue Three Piece"><h3>Aganur Sky Blue Three Piece</h3><p class="price">1,960৳ <s class="old">2,450৳</s></p><button class="ob" data-name="Aganur Sky Blue Three Piece" data-price="1,960৳">Order Now</button></div>
+    <div class="pc"><span class="badge">New</span><span class="off">-20%</span><img src="dress2.jpg" alt="Aganur Orange Three Piece"><h3>Aganur Orange Three Piece</h3><p class="price">1,960৳ <s class="old">2,450৳</s></p><button class="ob" data-name="Aganur Orange Three Piece" data-price="1,960৳">Order Now</button></div>
+    <div class="pc"><span class="badge">New</span><span class="off">-20%</span><img src="dress3.jpg" alt="Aganur Pink Three Piece"><h3>Aganur Pink Three Piece</h3><p class="price">1,960৳ <s class="old">2,450৳</s></p><button class="ob" data-name="Aganur Pink Three Piece" data-price="1,960৳">Order Now</button></div>
+    <div class="pc"><span class="badge">New</span><span class="off">-20%</span><img src="FB_IMG_1779716611770.jpg" alt="গারারা"><h3>গারারা</h3><p class="price">3,480৳ <s class="old">4,350৳</s></p><button class="ob" data-name="গারারা" data-price="3,480৳">Order Now</button></div>
+  </div>
+</section>
+
+<section class="show" id="contact">
+  <h2>Visit Our Showroom</h2>
+  <p>Khulna Shopping Complex, Dak Bangla Mor, Khulna</p>
+  <p>Phone / WhatsApp: 01740-240628</p>
+  <p>Open every day, 10:00 AM to 9:00 PM</p>
+  <a class="btn" href="https://wa.me/8801740240628">Chat on WhatsApp</a>
+</section>
+</main>
+
+<footer>&copy; 2026 Mim Mart. All rights reserved.</footer>
+
+<!-- Order modal -->
+<div class="modal" id="orderModal">
+  <div class="mb">
+    <h3>অর্ডার করুন</h3>
+    <p class="sel" id="selText"></p>
+    <form id="orderForm" name="order" method="POST" action="/thanks.html" data-netlify="true" netlify-honeypot="bot-field">
+      <input type="hidden" name="form-name" value="order">
+      <p hidden><label>Leave this empty <input name="bot-field"></label></p>
+      <input type="hidden" name="product" id="fProduct">
+      <input type="hidden" name="price" id="fPrice">
+      <input type="hidden" name="email" id="fEmail">
+      <label for="fName">আপনার নাম</label>
+      <input type="text" name="name" id="fName" required>
+      <label for="fPhone">ফোন নম্বর</label>
+      <input type="tel" name="phone" id="fPhone" required>
+      <label for="fAddress">পূর্ণ ঠিকানা</label>
+      <textarea name="address" id="fAddress" rows="3" required></textarea>
+      <div class="acts">
+        <button type="button" class="btn cancel" id="closeModal">বাতিল</button>
+        <button type="submit" class="btn">অর্ডার পাঠান</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Login / Sign up modal -->
+<div class="modal" id="authModal">
+  <div class="mb">
+    <!-- logged out view -->
+    <div id="authOut">
+      <h3 id="authTitle">Login</h3>
+      <div class="tabs">
+        <button type="button" id="tabLogin" class="on">Login</button>
+        <button type="button" id="tabSignup">Sign up</button>
+      </div>
+      <form id="authForm">
+        <div id="nameWrap" class="hide">
+          <label for="aName">আপনার নাম</label>
+          <input type="text" id="aName" autocomplete="name">
+        </div>
+        <label for="aEmail">ইমেইল</label>
+        <input type="email" id="aEmail" required autocomplete="email">
+        <label for="aPass">পাসওয়ার্ড</label>
+        <input type="password" id="aPass" required minlength="6" autocomplete="current-password">
+        <p class="msg" id="authMsg"></p>
+        <div class="acts">
+          <button type="button" class="btn cancel" id="authClose">বন্ধ করুন</button>
+          <button type="submit" class="btn" id="authSubmit">Login</button>
+        </div>
+        <button type="button" class="link" id="forgot">পাসওয়ার্ড ভুলে গেছেন?</button>
+      </form>
+    </div>
+    <!-- logged in view -->
+    <div id="authIn" class="hide">
+      <h3>আপনার অ্যাকাউন্ট</h3>
+      <p class="sel" id="whoText" style="margin-top:12px"></p>
+      <div class="acts">
+        <button type="button" class="btn cancel" id="authClose2">বন্ধ করুন</button>
+        <button type="button" class="btn" id="logoutBtn">Logout</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  var modal=document.getElementById('orderModal'),drawer=document.getElementById('drawer');
+  document.querySelectorAll('.ob').forEach(function(b){
+    b.addEventListener('click',function(){
+      var n=b.getAttribute('data-name'),p=b.getAttribute('data-price');
+      document.getElementById('fProduct').value=n;
+      document.getElementById('fPrice').value=p;
+      document.getElementById('selText').textContent=n+' - '+p;
+      modal.classList.add('open');
+    });
+  });
+  // Order: Netlify-te save + WhatsApp-e pathano
+  document.getElementById('orderForm').addEventListener('submit',function(e){
+    e.preventDefault();
+    var f=e.target,btn=f.querySelector('button[type=submit]');
+    btn.disabled=true;btn.textContent='পাঠানো হচ্ছে...';
+    var v=function(id){return document.getElementById(id).value.trim()};
+    var text='নতুন অর্ডার - Mim Mart\n\n'
+      +'পণ্য: '+v('fProduct')+'\n'
+      +'দাম: '+v('fPrice')+'\n'
+      +'নাম: '+v('fName')+'\n'
+      +'ফোন: '+v('fPhone')+'\n'
+      +'ঠিকানা: '+v('fAddress')
+      +(v('fEmail')?'\nইমেইল: '+v('fEmail'):'');
+    var wa='https://wa.me/8801740240628?text='+encodeURIComponent(text);
+    var go=function(){window.location.href=wa};
+    fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(new FormData(f)).toString()}).then(go,go);
+  });
+  document.getElementById('closeModal').onclick=function(){modal.classList.remove('open')};
+  modal.addEventListener('click',function(e){if(e.target===modal)modal.classList.remove('open')});
+  document.getElementById('openMenu').onclick=function(){drawer.classList.add('open')};
+  document.getElementById('closeMenu').onclick=function(){drawer.classList.remove('open')};
+  drawer.addEventListener('click',function(e){if(e.target===drawer||e.target.tagName==='A')drawer.classList.remove('open')});
+</script>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, sendPasswordResetEmail, updateProfile } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+  // ====== EIKHANE APNAR FIREBASE CONFIG BOSHAN ======
+  const firebaseConfig = {
+    apiKey: "YOUR_API_KEY",
+    authDomain: "YOUR_PROJECT.firebaseapp.com",
+    projectId: "YOUR_PROJECT_ID",
+    appId: "YOUR_APP_ID"
+  };
+  // ===================================================
+
+  const $ = id => document.getElementById(id);
+  const authModal = $('authModal'), msg = $('authMsg');
+  let mode = 'login', user = null;
+  const configured = firebaseConfig.apiKey !== "YOUR_API_KEY";
+  let auth = null;
+  if (configured) { auth = getAuth(initializeApp(firebaseConfig)); }
+
+  function setMsg(t, ok){ msg.textContent = t || ''; msg.className = 'msg ' + (t ? (ok ? 'ok' : 'err') : ''); }
+  function setMode(m){
+    mode = m;
+    $('tabLogin').classList.toggle('on', m === 'login');
+    $('tabSignup').classList.toggle('on', m === 'signup');
+    $('nameWrap').classList.toggle('hide', m !== 'signup');
+    $('authTitle').textContent = m === 'login' ? 'Login' : 'নতুন অ্যাকাউন্ট';
+    $('authSubmit').textContent = m === 'login' ? 'Login' : 'Sign up';
+    $('aPass').autocomplete = m === 'login' ? 'current-password' : 'new-password';
+    $('forgot').classList.toggle('hide', m !== 'login');
+    setMsg('');
+  }
+  function openAuth(){
+    $('authOut').classList.toggle('hide', !!user);
+    $('authIn').classList.toggle('hide', !user);
+    if (user) $('whoText').textContent = (user.displayName ? user.displayName + ' — ' : '') + user.email;
+    authModal.classList.add('open');
+  }
+  function closeAuth(){ authModal.classList.remove('open'); }
+
+  function bn(code){
+    const m = {
+      'auth/email-already-in-use':'এই ইমেইল দিয়ে আগেই অ্যাকাউন্ট খোলা আছে। Login করুন।',
+      'auth/invalid-email':'ইমেইল সঠিক নয়।',
+      'auth/weak-password':'পাসওয়ার্ড কমপক্ষে ৬ অক্ষরের দিন।',
+      'auth/invalid-credential':'ইমেইল বা পাসওয়ার্ড ভুল।',
+      'auth/user-not-found':'এই ইমেইলে অ্যাকাউন্ট নেই।',
+      'auth/wrong-password':'পাসওয়ার্ড ভুল।',
+      'auth/too-many-requests':'অনেকবার চেষ্টা হয়েছে, কিছুক্ষণ পর আবার চেষ্টা করুন।',
+      'auth/network-request-failed':'ইন্টারনেট সংযোগ চেক করুন।'
+    };
+    return m[code] || 'কিছু একটা সমস্যা হয়েছে, আবার চেষ্টা করুন।';
+  }
+
+  $('tabLogin').onclick = () => setMode('login');
+  $('tabSignup').onclick = () => setMode('signup');
+  $('acctBtn').onclick = openAuth;
+  $('drawerAcct').onclick = () => { $('drawer').classList.remove('open'); openAuth(); };
+  $('authClose').onclick = closeAuth;
+  $('authClose2').onclick = closeAuth;
+  authModal.addEventListener('click', e => { if (e.target === authModal) closeAuth(); });
+
+  $('authForm').addEventListener('submit', async e => {
+    e.preventDefault();
+    if (!configured) { setMsg('Firebase config এখনও বসানো হয়নি।'); return; }
+    const email = $('aEmail').value.trim(), pass = $('aPass').value, name = $('aName').value.trim();
+    $('authSubmit').disabled = true; setMsg('অপেক্ষা করুন...', true);
+    try {
+      if (mode === 'signup') {
+        const c = await createUserWithEmailAndPassword(auth, email, pass);
+        if (name) await updateProfile(c.user, { displayName: name });
+      } else {
+        await signInWithEmailAndPassword(auth, email, pass);
+      }
+      setMsg(''); closeAuth(); $('authForm').reset();
+    } catch (err) { setMsg(bn(err.code)); }
+    $('authSubmit').disabled = false;
+  });
+
+  $('forgot').onclick = async () => {
+    if (!configured) { setMsg('Firebase config এখনও বসানো হয়নি।'); return; }
+    const email = $('aEmail').value.trim();
+    if (!email) { setMsg('আগে উপরে ইমেইল লিখুন।'); return; }
+    try { await sendPasswordResetEmail(auth, email); setMsg('পাসওয়ার্ড রিসেটের লিংক ইমেইলে পাঠানো হয়েছে।', true); }
+    catch (err) { setMsg(bn(err.code)); }
+  };
+
+  $('logoutBtn').onclick = async () => { if (auth) await signOut(auth); closeAuth(); };
+
+  function onUser(u){
+    user = u;
+    const label = u ? (u.displayName || u.email.split('@')[0]) : 'Login';
+    $('acctBtn').textContent = label;
+    $('acctBtn').classList.toggle('in', !!u);
+    $('drawerAcct').textContent = u ? 'Account / Logout' : 'Login / Sign up';
+    // Order form: logged in thakle naam ar email auto bose jabe
+    $('fEmail').value = u ? u.email : '';
+    if (u && u.displayName && !$('fName').value) $('fName').value = u.displayName;
+  }
+  if (configured) onAuthStateChanged(auth, onUser);
+</script>
+
+</body>
+</html>
