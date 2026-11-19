@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="bn"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>Mim Mart Admin</title>
+<style>
+:root{--p:#ff1f9c;--ink:#14161f;--g:#8a8f9c}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:system-ui,"Noto Sans Bengali",Arial,sans-serif;background:linear-gradient(135deg,#f8d7e8,#e6dcf0);min-height:100vh;color:var(--ink)}
+.hide{display:none!important}
+.card{background:#fff;border-radius:16px;padding:16px;box-shadow:0 2px 12px rgba(0,0,0,.06);margin-bottom:14px}
+#login{min-height:100vh;display:grid;place-items:center;padding:16px}
+#login .card{width:100%;max-width:360px}
+.logo{width:44px;height:44px;border-radius:12px;background:var(--p);color:#fff;font-weight:800;font-size:24px;display:grid;place-items:center}
+h1{font-size:22px;margin-bottom:14px}h2{font-size:17px;margin-bottom:10px}
+input,select{width:100%;padding:11px;border:1px solid #ddd;border-radius:10px;font-size:16px;margin:4px 0 10px;font-family:inherit;background:#fff}
+label{font-size:13px;font-weight:700;color:#555}
+button{font-family:inherit;cursor:pointer}
+.btn{background:var(--p);color:#fff;border:0;border-radius:10px;padding:11px 16px;font-weight:700;font-size:15px}
+.btn.s{padding:8px 12px;font-size:13px}.btn.g{background:#eee;color:var(--ink)}.btn.r{background:#e53935}.btn.ok{background:#2e9d4f}
+#app{display:flex}
+aside{width:210px;padding:18px 12px;background:rgba(255,255,255,.7);position:sticky;top:0;align-self:flex-start;height:100vh;display:flex;flex-direction:column;gap:6px}
+aside .logo{margin:0 0 14px 8px}
+.nv{background:none;border:0;text-align:left;padding:12px;border-radius:10px;font-size:15px;font-weight:600;color:var(--ink)}
+.nv.on{background:#fff;box-shadow:0 1px 6px rgba(0,0,0,.08);color:var(--p)}
+main{flex:1;padding:18px;min-width:0;max-width:1000px}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:14px}
+.stats .card{margin:0}.stats b{font-size:26px;display:block;margin-top:4px}.stats span{font-size:13px;color:var(--g)}
+.bars{display:flex;align-items:flex-end;gap:5px;height:160px}
+.b{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;min-width:0}
+.b i{display:block;width:100%;background:linear-gradient(#ff5cb8,var(--p));border-radius:5px 5px 0 0;min-height:2px}
+.b small{font-size:10px;color:var(--g);margin-top:3px}.b em{font-size:9px;font-style:normal;color:#555}
+.row{display:flex;gap:10px;align-items:center;padding:10px 0;border-top:1px solid #eee;flex-wrap:wrap}
+.row h2+.row{border-top:0}
+.row img,.ph{width:56px;height:70px;object-fit:cover;border-radius:8px;background:#f1e6ee;flex:none}
+.grow{flex:1;min-width:140px}.grow b{display:block}.grow span{font-size:13px;color:var(--g)}
+.ed{display:flex;gap:6px;align-items:center;flex-wrap:wrap}.ed input{width:84px;margin:0;padding:8px}
+.tag{font-size:12px;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap}
+.pending{background:#fff3cd;color:#8a6500}.confirmed{background:#d9f4e0;color:#1c7a38}.cancelled{background:#fde0e0;color:#b71c1c}
+.low{color:#e53935!important;font-weight:800}
+.tabs{display:flex;gap:6px;margin-bottom:12px;overflow-x:auto}.tabs button{border:1px solid var(--p);background:#fff;color:var(--p);padding:8px 14px;border-radius:20px;font-weight:700;white-space:nowrap}.tabs .on{background:var(--p);color:#fff}
+.f2{display:grid;grid-template-columns:1fr 1fr;gap:0 10px}
+.err{color:#c62828;font-size:14px;min-height:18px}
+@media(max-width:800px){#app{display:block}aside{position:fixed;bottom:0;left:0;right:0;top:auto;width:auto;height:auto;flex-direction:row;padding:6px;z-index:20;box-shadow:0 -2px 10px rgba(0,0,0,.1);background:#fff}aside .logo{display:none}.nv{flex:1;text-align:center;padding:9px 2px;font-size:12px}main{padding:14px 12px 90px}}
+@media(min-width:800px){.stats{grid-template-columns:repeat(4,1fr)}}
+</style></head>
+<body>
+<div id="login"><form class="card" id="lf"><div class="logo" style="margin:0 auto 12px">M</div><h1 style="text-align:center">Mim Mart Admin</h1><label>ইমেইল</label><input type="email" id="em" required><label>পাসওয়ার্ড</label><input type="password" id="pw" required><p class="err" id="lm"></p><button class="btn" style="width:100%">Login</button></form></div>
+<div id="app" class="hide">
+<aside><div class="logo">M</div><button class="nv on" data-v="dash">📊 ড্যাশবোর্ড</button><button class="nv" data-v="prod">👗 প্রোডাক্ট</button><button class="nv" data-v="ord">🛒 অর্ডার <span id="oc"></span></button><button class="nv" data-v="stock">📦 স্টক</button><button class="nv" id="out" style="margin-top:auto">Logout</button></aside>
+<main>
+<section id="s-dash"><h1>ড্যাশবোর্ড</h1><div class="stats" id="stats"></div><div class="card"><h2>দৈনিক সেলস (শেষ ১৪ দিন)</h2><div id="daily"></div></div><div class="card"><h2>মাসিক সেলস (শেষ ৬ মাস)</h2><div id="monthly"></div></div><p style="font-size:13px;color:#666">শুধু কনফার্ম করা অর্ডার সেলসে ধরা হয়।</p></section>
+<section id="s-prod" class="hide"><h1>প্রোডাক্ট</h1>
+<form class="card" id="pf"><h2>নতুন প্রোডাক্ট আপলোড</h2><label>নাম</label><input name="pname" required>
+<div class="f2"><div><label>ক্যাটাগরি</label><select name="cat"><option>থ্রি পিস</option><option>ওয়ান পিস</option><option>পার্টি ওয়্যার</option><option>ফারসি</option></select></div><div><label>স্টক</label><input name="stock" type="number" min="0" required></div><div><label>দাম (৳)</label><input name="price" type="number" min="0" required></div><div><label>আগের দাম (ঐচ্ছিক)</label><input name="oldp" type="number" min="0"></div></div>
+<label>ছবি</label><input name="photo" type="file" accept="image/*"><button class="btn">আপলোড করুন</button></form>
+<div class="card" id="pl"></div></section>
+<section id="s-ord" class="hide"><h1>অর্ডার</h1><div class="tabs" id="tabs"></div><div id="ol"></div></section>
+<section id="s-stock" class="hide"><h1>স্টক ম্যানেজমেন্ট</h1><div class="card" id="sl"></div></section>
+</main></div>
+
+<script type="module">
+import{initializeApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import{getAuth,signInWithEmailAndPassword,signOut,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import{getFirestore,collection,addDoc,doc,updateDoc,deleteDoc,onSnapshot,query,orderBy,serverTimestamp,increment}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+// ===== Firebase config ar admin email ekhane boshan =====
+const CFG={apiKey:"AIzaSyCkpjDHNWCpUgDcHSSw6QV0dTBgmqx4J8M",authDomain:"mimmart.firebaseapp.com",projectId:"mimmart",appId:"1:14527318030:web:a02900d255aa7fb05b145f"};
+const ADMIN_EMAIL="mimrayhan160@gmail.com";
+/* Firestore Rules (Firebase > Firestore > Rules) e eta boshan, YOUR_EMAIL bodlan:
+match /databases/{d}/documents {
+  match /products/{id} { allow read: if true; allow write: if request.auth!=null && request.auth.token.email=="YOUR_EMAIL"; }
+  match /orders/{id} { allow create: if true; allow read,update,delete: if request.auth!=null && request.auth.token.email=="YOUR_EMAIL"; }
+} */
+
+const app=initializeApp(CFG),auth=getAuth(app),db=getFirestore(app);
+const $=s=>document.querySelector(s),num=v=>parseInt(String(v).replace(/[^\d]/g,''))||0,tk=n=>n.toLocaleString('en-IN')+'৳';
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const LBL={pending:'অপেক্ষমান',confirmed:'কনফার্মড',cancelled:'বাতিল'};
+const dt=o=>o.createdAt?.toDate?.()||new Date();
+const short=v=>v>=1000?(v/1000).toFixed(1)+'k':(v||'');
+let P=[],O=[],F='all',un=[];
+
+const bars=a=>{const m=Math.max(...a.map(x=>x.v),1);return'<div class="bars">'+a.map(x=>`<div class="b"><em>${short(x.v)}</em><i style="height:${x.v/m*75}%"></i><small>${x.l}</small></div>`).join('')+'</div>'};
+
+function render(){
+  const C=O.filter(o=>o.status==='confirmed'),now=new Date();
+  const k=(d,m)=>d.getFullYear()+'-'+d.getMonth()+(m?'':'-'+d.getDate());
+  const sum=f=>C.filter(f).reduce((s,o)=>s+num(o.price)*(o.qty||1),0);
+  const pend=O.filter(o=>o.status==='pending').length,low=P.filter(p=>p.stock<=5).length;
+  $('#oc').textContent=pend?'('+pend+')':'';
+  $('#stats').innerHTML=[['আজকের সেলস',tk(sum(o=>k(dt(o))===k(now)))],['এই মাসের সেলস',tk(sum(o=>k(dt(o),1)===k(now,1)))],['অপেক্ষমান অর্ডার',pend],['লো স্টক (৫ বা কম)',low]].map(x=>`<div class="card"><span>${x[0]}</span><b>${x[1]}</b></div>`).join('');
+  const D=[],M=[];
+  for(let i=13;i>=0;i--){const d=new Date();d.setDate(d.getDate()-i);D.push({l:d.getDate(),v:sum(o=>k(dt(o))===k(d))})}
+  for(let i=5;i>=0;i--){const d=new Date(now.getFullYear(),now.getMonth()-i,1);M.push({l:d.toLocaleString('bn-BD',{month:'short'}),v:sum(o=>k(dt(o),1)===k(d,1))})}
+  $('#daily').innerHTML=bars(D);$('#monthly').innerHTML=bars(M);
+
+  $('#pl').innerHTML='<h2>সব প্রোডাক্ট ('+P.length+')</h2>'+(P.map(p=>`<div class="row">${p.img?`<img src="${p.img}" alt="">`:'<div class="ph"></div>'}<div class="grow"><b>${esc(p.name)}</b><span>${esc(p.category)}, স্টক ${p.stock}</span></div><div class="ed"><input id="pr-${p.id}" type="number" value="${p.price}"><button class="btn s" data-a="price" data-id="${p.id}">দাম সেভ</button><button class="btn s r" data-a="del" data-id="${p.id}">মুছুন</button></div></div>`).join('')||'<p>কোনো প্রোডাক্ট নেই। উপরের ফর্ম দিয়ে প্রথম প্রোডাক্ট যোগ করুন।</p>');
+
+  $('#sl').innerHTML=[...P].sort((a,b)=>a.stock-b.stock).map(p=>`<div class="row"><div class="grow"><b>${esc(p.name)}</b><span class="${p.stock<=5?'low':''}">${p.stock<=5?'লো স্টক: ':'স্টক: '}${p.stock}</span></div><div class="ed"><button class="btn s g" data-a="st" data-id="${p.id}" data-d="-1">−</button><input id="sk-${p.id}" type="number" value="${p.stock}"><button class="btn s g" data-a="st" data-id="${p.id}" data-d="1">+</button><button class="btn s" data-a="stset" data-id="${p.id}">সেভ</button></div></div>`).join('')||'<p>কোনো প্রোডাক্ট নেই</p>';
+
+  $('#tabs').innerHTML=[['all','সব'],['pending','অপেক্ষমান'],['confirmed','কনফার্মড'],['cancelled','বাতিল']].map(t=>`<button data-a="f" data-s="${t[0]}" class="${F===t[0]?'on':''}">${t[1]}</button>`).join('');
+  $('#ol').innerHTML=O.filter(o=>F==='all'||o.status===F).map(o=>`<div class="card"><div style="display:flex;justify-content:space-between;gap:8px"><b>${esc(o.product)}</b><span class="tag ${o.status}">${LBL[o.status]||esc(o.status)}</span></div><p>${tk(num(o.price)*(o.qty||1))}, ${dt(o).toLocaleString('bn-BD',{dateStyle:'medium',timeStyle:'short'})}</p><p style="font-size:14px;margin:6px 0 10px">${esc(o.name)}, <a href="tel:${esc(o.phone)}">${esc(o.phone)}</a><br>${esc(o.address)}</p><div class="ed"><button class="btn s ok" data-a="os" data-id="${o.id}" data-s="confirmed">কনফার্ম করুন</button><button class="btn s r" data-a="os" data-id="${o.id}" data-s="cancelled">বাতিল করুন</button></div></div>`).join('')||'<p>কোনো অর্ডার নেই।</p>';
+}
+
+// Order status bodlale stock auto komey/barey
+async function setSt(id,s){
+  const o=O.find(x=>x.id===id),was=o.status;if(was===s)return;
+  await updateDoc(doc(db,'orders',id),{status:s});
+  const p=P.find(x=>x.name===o.product||String(o.product).startsWith(x.name)),q=o.qty||1;
+  if(!p)return;
+  if(s==='confirmed')await updateDoc(doc(db,'products',p.id),{stock:increment(-q)});
+  else if(was==='confirmed')await updateDoc(doc(db,'products',p.id),{stock:increment(q)});
+}
+
+document.addEventListener('click',async ev=>{
+  const n=ev.target.closest('.nv[data-v]');
+  if(n){document.querySelectorAll('.nv').forEach(x=>x.classList.toggle('on',x===n));document.querySelectorAll('main section').forEach(s=>s.classList.toggle('hide',s.id!=='s-'+n.dataset.v));return}
+  const b=ev.target.closest('[data-a]');if(!b)return;
+  const{a,id,s,d}=b.dataset;
+  try{
+    if(a==='f'){F=s;render()}
+    else if(a==='os')await setSt(id,s);
+    else if(a==='price')await updateDoc(doc(db,'products',id),{price:num($('#pr-'+id).value)});
+    else if(a==='del'){if(confirm('এই প্রোডাক্ট মুছবেন?'))await deleteDoc(doc(db,'products',id))}
+    else if(a==='st')await updateDoc(doc(db,'products',id),{stock:increment(+d)});
+    else if(a==='stset')await updateDoc(doc(db,'products',id),{stock:num($('#sk-'+id).value)});
+  }catch(x){alert('সমস্যা: '+x.message)}
+});
+
+// ছবি ছোট করে (600px) সেভ হয়, তাই আলাদা Storage লাগে না
+const shrink=f=>new Promise(r=>{const i=new Image();i.onload=()=>{const s=Math.min(1,600/i.width),c=document.createElement('canvas');c.width=i.width*s;c.height=i.height*s;c.getContext('2d').drawImage(i,0,0,c.width,c.height);r(c.toDataURL('image/jpeg',.72))};i.src=URL.createObjectURL(f)});
+
+$('#pf').onsubmit=async ev=>{
+  ev.preventDefault();const f=ev.target,b=f.querySelector('button');b.disabled=true;
+  try{
+    const file=f.photo.files[0];
+    await addDoc(collection(db,'products'),{name:f.pname.value.trim(),category:f.cat.value,price:num(f.price.value),oldPrice:num(f.oldp.value),stock:num(f.stock.value),img:file?await shrink(file):'',createdAt:serverTimestamp()});
+    f.reset();alert('প্রোডাক্ট যোগ হয়েছে');
+  }catch(x){alert('সমস্যা: '+x.message)}
+  b.disabled=false;
+};
+
+$('#lf').onsubmit=async ev=>{
+  ev.preventDefault();$('#lm').textContent='';
+  if(CFG.apiKey.startsWith('YOUR')){$('#lm').textContent='আগে ফাইলে Firebase config বসান।';return}
+  try{await signInWithEmailAndPassword(auth,$('#em').value,$('#pw').value)}catch{$('#lm').textContent='ইমেইল বা পাসওয়ার্ড ভুল।'}
+};
+$('#out').onclick=()=>signOut(auth);
+
+onAuthStateChanged(auth,u=>{
+  if(u&&u.email!==ADMIN_EMAIL){signOut(auth);$('#lm').textContent='এই অ্যাকাউন্টে অ্যাডমিন অ্যাক্সেস নেই।';return}
+  $('#login').classList.toggle('hide',!!u);$('#app').classList.toggle('hide',!u);
+  if(u&&!un.length){
+    un=[onSnapshot(collection(db,'products'),s=>{P=s.docs.map(d=>({id:d.id,...d.data()}));render()}),
+        onSnapshot(query(collection(db,'orders'),orderBy('createdAt','desc')),s=>{O=s.docs.map(d=>({id:d.id,...d.data()}));render()})];
+  }
+  if(!u){un.forEach(f=>f());un=[]}
+});
+</script>
+</body></html>
