@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="bn"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mim Mart Admin</title>
+<style>
+:root{--bg:#fdf2f8;--card:#fff;--tx:#1a1a2e;--mu:#6b7280;--pk:#ff1fa5;--bd:#f0e4ec;--ok:#16a34a;--bad:#e11d48;--wr:#f59e0b;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#1a1020;--card:#241830;--tx:#f5eefa;--mu:#a99bb8;--bd:#3a2a4a}}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:system-ui,-apple-system,"Noto Sans Bengali","Segoe UI",sans-serif;font-size:15px}
+.app{display:grid;grid-template-columns:220px 1fr;min-height:100vh}
+nav{background:var(--card);border-right:1px solid var(--bd);padding:18px 12px;position:sticky;top:0;height:100vh}
+.logo{display:flex;align-items:center;gap:10px;font-weight:700;font-size:17px;margin-bottom:18px}
+.logo b{background:var(--pk);color:#fff;width:38px;height:38px;border-radius:12px;display:grid;place-items:center}
+nav button{display:block;width:100%;text-align:left;border:0;background:none;color:var(--tx);padding:11px 12px;border-radius:10px;font:inherit;cursor:pointer;margin-bottom:4px}
+nav button.on{background:var(--bg);color:var(--pk);font-weight:600}
+main{padding:20px;min-width:0}
+h1{font-size:22px;margin:0 0 16px}h2{font-size:16px;margin:0 0 12px}
+.grid{display:grid;gap:14px}.g4{grid-template-columns:repeat(auto-fit,minmax(170px,1fr))}.g2{grid-template-columns:repeat(auto-fit,minmax(300px,1fr))}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:16px}
+.stat small{color:var(--mu)}.stat div{font-size:26px;font-weight:700;margin-top:6px}
+.btn{background:var(--pk);color:#fff;border:0;border-radius:10px;padding:9px 14px;font:inherit;cursor:pointer}
+.btn.o{background:none;color:var(--tx);border:1px solid var(--bd)}.btn.ok{background:var(--ok)}.btn.bad{background:var(--bad)}.btn.s{padding:6px 10px;font-size:13px}
+input,select,textarea{font:inherit;color:var(--tx);background:var(--bg);border:1px solid var(--bd);border-radius:10px;padding:9px 10px;width:100%}
+.f{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-bottom:10px}
+.row{display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--bd);flex-wrap:wrap}
+.row:last-child{border:0}.row img{width:46px;height:56px;object-fit:cover;border-radius:8px;background:var(--bd)}
+.grow{flex:1;min-width:140px}.mu{color:var(--mu);font-size:13px}
+.tag{padding:3px 9px;border-radius:99px;font-size:12px;font-weight:600}
+.pending{background:#fef3c7;color:#92400e}.confirmed{background:#dcfce7;color:#166534}.cancelled{background:#ffe4e6;color:#9f1239}
+.bars{display:flex;align-items:flex-end;gap:5px;height:170px;overflow-x:auto;padding-top:10px}
+.bar{flex:1;min-width:22px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%}
+.bar i{display:block;width:100%;background:linear-gradient(var(--pk),#f9a8d4);border-radius:6px 6px 0 0;min-height:2px}
+.bar span{font-size:10px;color:var(--mu);margin-top:4px;white-space:nowrap}
+.tabs{display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap}.tabs .btn{background:var(--card);color:var(--tx);border:1px solid var(--bd)}.tabs .btn.on{background:var(--pk);color:#fff;border-color:var(--pk)}
+table{width:100%;border-collapse:collapse}td,th{padding:8px;text-align:left;border-bottom:1px solid var(--bd)}th{color:var(--mu);font-weight:500;font-size:13px}
+.wrap{overflow-x:auto}details summary{cursor:pointer;font-weight:600;color:var(--pk)}
+#login{position:fixed;inset:0;background:var(--bg);display:grid;place-items:center;z-index:9}#login .card{width:min(340px,90vw)}
+@media(max-width:760px){.app{grid-template-columns:1fr}nav{position:fixed;bottom:0;left:0;right:0;height:auto;top:auto;z-index:5;display:flex;padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--bd);border-right:0}.logo{display:none}nav button{text-align:center;font-size:12px;padding:8px 2px;margin:0}main{padding:14px 14px 90px}}
+</style></head><body>
+<div id="login"><div class="card"><h2>🔐 Mim Mart Admin</h2><input id="pw" type="password" placeholder="পাসওয়ার্ড" style="margin-bottom:10px"><button class="btn" style="width:100%" onclick="login()">লগইন</button><p class="mu">প্রথমবার পাসওয়ার্ড: admin123 (লগইনের পর Settings থেকে বদলান)</p></div></div>
+<div class="app"><nav id="nav"></nav><main id="main"></main></div>
+<script>
+const $=s=>document.querySelector(s);
+const L=(k,d)=>{try{const v=JSON.parse(localStorage.getItem(k));return v==null?d:v}catch(e){return d}};
+const S=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){alert('Storage ভরে গেছে, ছোট ছবি ব্যবহার করুন')}};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const fmt=n=>Number(n).toLocaleString('en-US')+'৳';
+const dk=d=>{d=new Date(d);return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+let P=L('mm_p',null)||[
+{id:1,name:'Aganur Sky Blue Three Piece',cat:'Three Piece',price:2450,stock:20,img:'dress1.jpg'},
+{id:2,name:'Aganur Orange Three Piece',cat:'Three Piece',price:2450,stock:20,img:'dress2.jpg'},
+{id:3,name:'Aganur Pink Three Piece',cat:'Three Piece',price:2450,stock:20,img:'dress3.jpg'},
+{id:4,name:'গারারা',cat:'Party Wear',price:4350,stock:10,img:'FB_IMG_1779716611770.jpg'}];
+let O=L('mm_o',[]);let view='dash',ofilter='all',sm='daily';
+const saveP=()=>S('mm_p',P),saveO=()=>S('mm_o',O);
+const LOW=5;
+const pn=id=>(P.find(p=>p.id==id)||{name:'(মুছে ফেলা)'}).name;
+function login(){if($('#pw').value===L('mm_pw','admin123')){sessionStorage.setItem('mm_in','1');$('#login').style.display='none'}else alert('ভুল পাসওয়ার্ড')}
+$('#pw').addEventListener('keydown',e=>e.key==='Enter'&&login());
+if(sessionStorage.getItem('mm_in'))$('#login').style.display='none';
+const V=[['dash','📊 Dashboard'],['prod','👗 Product'],['ord','🧾 Order'],['stock','📦 Stock'],['sales','💰 Sales'],['set','⚙️ Settings']];
+function go(v){view=v;render()}
+function bars(d){const m=Math.max(1,...d.map(x=>x.v));return `<div class="bars">${d.map(x=>`<div class="bar" title="${fmt(x.v)}"><i style="height:${x.v/m*85}%"></i><span>${x.l}</span></div>`).join('')}</div>`}
+function confirmedOrders(){return O.filter(o=>o.status==='confirmed')}
+function dailyData(n){const out=[],now=new Date();for(let i=n-1;i>=0;i--){const d=new Date(now);d.setDate(now.getDate()-i);const k=dk(d);const os=confirmedOrders().filter(o=>dk(o.date)===k);out.push({k,l:k.slice(8),v:os.reduce((a,o)=>a+o.total,0),c:os.length})}return out}
+function monthlyData(n){const out=[],now=new Date();for(let i=n-1;i>=0;i--){const d=new Date(now.getFullYear(),now.getMonth()-i,1);const k=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');const os=confirmedOrders().filter(o=>dk(o.date).slice(0,7)===k);out.push({k,l:k.slice(2),v:os.reduce((a,o)=>a+o.total,0),c:os.length})}return out}
+function orderRow(o,full){return `<div class="row"><div class="grow"><b>${esc(o.name)}</b> <span class="tag ${o.status}">${{pending:'Pending',confirmed:'Confirmed',cancelled:'Cancelled'}[o.status]}</span><div class="mu">${esc(o.phone)} · ${esc(o.address)}</div><div class="mu">${esc(pn(o.pid))} × ${o.qty} = <b>${fmt(o.total)}</b> · ${dk(o.date)}</div></div>${full?`<div>${o.status!=='confirmed'?`<button class="btn ok s" onclick="setSt(${o.id},'confirmed')">✓ Confirm</button> `:''}${o.status!=='cancelled'?`<button class="btn bad s" onclick="setSt(${o.id},'cancelled')">✕ Cancel</button>`:''}</div>`:''}</div>`}
+function setSt(id,st){const o=O.find(x=>x.id===id),p=P.find(x=>x.id==o.pid);if(!o||o.status===st)return;
+ if(st==='confirmed'&&p){if(p.stock<o.qty&&!confirm('Stock কম আছে ('+p.stock+')। তবুও Confirm করবেন?'))return;p.stock=Math.max(0,p.stock-o.qty)}
+ if(o.status==='confirmed'&&st==='cancelled'&&p)p.stock+=o.qty;
+ o.status=st;saveO();saveP();render()}
+function render(){
+ $('#nav').innerHTML='<div class="logo"><b>M</b>Mim Mart</div>'+V.map(([k,t])=>`<button class="${view===k?'on':''}" onclick="go('${k}')">${t}</button>`).join('');
+ const m=$('#main'),now=new Date(),mk=dk(now).slice(0,7);
+ if(view==='dash'){
+  const rev=confirmedOrders().filter(o=>dk(o.date).slice(0,7)===mk).reduce((a,o)=>a+o.total,0),today=confirmedOrders().filter(o=>dk(o.date)===dk(now)).reduce((a,o)=>a+o.total,0);
+  const low=P.filter(p=>p.stock<=LOW),pend=O.filter(o=>o.status==='pending');
+  m.innerHTML=`<h1>Admin Dashboard</h1><div class="grid g4">
+  <div class="card stat"><small>মোট Product</small><div>${P.length}</div></div>
+  <div class="card stat"><small>Stock কম</small><div style="color:var(--bad)">${low.length}</div></div>
+  <div class="card stat"><small>এ মাসের বিক্রি</small><div>${fmt(rev)}</div></div>
+  <div class="card stat"><small>আজকের বিক্রি</small><div>${fmt(today)}</div></div>
+  <div class="card stat"><small>Pending Order</small><div style="color:var(--wr)">${pend.length}</div></div></div>
+  <div class="grid g2" style="margin-top:14px"><div class="card"><h2>গত ১৪ দিনের বিক্রি</h2>${bars(dailyData(14))}</div>
+  <div class="card"><h2>⚠️ Stock Warning</h2>${low.map(p=>`<div class="row"><div class="grow">${esc(p.name)}</div><b style="color:var(--bad)">${p.stock} টি</b></div>`).join('')||'<p class="mu">সব ঠিক আছে ✓</p>'}</div></div>
+  <div class="card" style="margin-top:14px"><h2>Pending Order</h2>${pend.slice(0,5).map(o=>orderRow(o,true)).join('')||'<p class="mu">কোনো pending order নেই</p>'}</div>`}
+ else if(view==='prod'){
+  m.innerHTML=`<h1>Product Management</h1><div class="card"><details><summary>＋ নতুন Product Upload</summary><div style="margin-top:12px"><div class="f"><input id="pn" placeholder="Product নাম"><select id="pc"><option>Three Piece</option><option>Kurti</option><option>Saree</option><option>Party Wear</option></select><input id="pp" type="number" placeholder="দাম (৳)"><input id="ps" type="number" placeholder="Stock পরিমাণ"></div><div class="f"><input id="pf" type="file" accept="image/*"><input id="pu" placeholder="অথবা ছবির নাম/URL (যেমন dress1.jpg)"></div><button class="btn" onclick="addP()">Upload করুন</button></div></details></div>
+  <div class="card" style="margin-top:14px"><h2>সব Product (${P.length})</h2>${P.map(p=>`<div class="row"><img src="${esc(p.img)}" alt=""><div class="grow"><b>${esc(p.name)}</b><div class="mu">${esc(p.cat)} · Stock: ${p.stock}</div></div><input type="number" id="pr${p.id}" value="${p.price}" style="width:100px"><button class="btn s" onclick="setPrice(${p.id})">দাম সেভ</button><button class="btn o s" onclick="delP(${p.id})">🗑</button></div>`).join('')}</div>`}
+ else if(view==='ord'){
+  const list=O.filter(o=>ofilter==='all'||o.status===ofilter).sort((a,b)=>new Date(b.date)-new Date(a.date));
+  m.innerHTML=`<h1>Order</h1><div class="card"><details><summary>＋ নতুন Order যোগ করুন (ফোন/WhatsApp order)</summary><div style="margin-top:12px"><div class="f"><input id="on" placeholder="কাস্টমারের নাম"><input id="oph" placeholder="ফোন নম্বর"><input id="oa" placeholder="পূর্ণ ঠিকানা"></div><div class="f"><select id="op">${P.map(p=>`<option value="${p.id}">${esc(p.name)} - ${fmt(p.price)}</option>`).join('')}</select><input id="oq" type="number" value="1" min="1"></div><button class="btn" onclick="addO()">Order সেভ</button></div></details></div>
+  <div class="tabs" style="margin-top:14px">${['all','pending','confirmed','cancelled'].map(f=>`<button class="btn ${ofilter===f?'on':''}" onclick="ofilter='${f}';render()">${f} (${f==='all'?O.length:O.filter(o=>o.status===f).length})</button>`).join('')}</div>
+  <div class="card">${list.map(o=>orderRow(o,true)).join('')||'<p class="mu">কোনো order নেই</p>'}</div>`}
+ else if(view==='stock'){
+  m.innerHTML=`<h1>Stock Management</h1><div class="card">${P.map(p=>`<div class="row"><img src="${esc(p.img)}" alt=""><div class="grow"><b>${esc(p.name)}</b><div class="mu">${p.stock<=LOW?'<span style="color:var(--bad)">⚠️ Stock কম</span>':'ঠিক আছে'}</div></div><button class="btn o s" onclick="adj(${p.id},-1)">−</button><input type="number" id="st${p.id}" value="${p.stock}" style="width:80px" onchange="setStock(${p.id})"><button class="btn o s" onclick="adj(${p.id},1)">＋</button></div>`).join('')}</div>`}
+ else if(view==='sales'){
+  const d=sm==='daily'?dailyData(30):monthlyData(12),tot=d.reduce((a,x)=>a+x.v,0),cnt=d.reduce((a,x)=>a+x.c,0);
+  m.innerHTML=`<h1>Sales Report</h1><div class="tabs"><button class="btn ${sm==='daily'?'on':''}" onclick="sm='daily';render()">Daily (৩০ দিন)</button><button class="btn ${sm==='monthly'?'on':''}" onclick="sm='monthly';render()">Monthly (১২ মাস)</button></div>
+  <div class="grid g4"><div class="card stat"><small>মোট বিক্রি</small><div>${fmt(tot)}</div></div><div class="card stat"><small>Confirmed Order</small><div>${cnt}</div></div></div>
+  <div class="card" style="margin-top:14px">${bars(d)}</div>
+  <div class="card wrap" style="margin-top:14px"><table><tr><th>${sm==='daily'?'তারিখ':'মাস'}</th><th>Order</th><th>বিক্রি</th></tr>${d.slice().reverse().map(x=>`<tr><td>${x.k}</td><td>${x.c}</td><td>${fmt(x.v)}</td></tr>`).join('')}</table></div>
+  <p class="mu">শুধু Confirmed order বিক্রি হিসেবে গোনা হয়।</p>`}
+ else{
+  m.innerHTML=`<h1>Settings</h1><div class="card"><h2>পাসওয়ার্ড বদলান</h2><div class="f"><input id="np" type="password" placeholder="নতুন পাসওয়ার্ড"></div><button class="btn" onclick="chPw()">সেভ</button></div>
+  <div class="card" style="margin-top:14px"><h2>ডেটা</h2><button class="btn o" onclick="demo()">ডেমো order দিয়ে টেস্ট করুন</button> <button class="btn o" onclick="dl()">Backup ডাউনলোড</button> <button class="btn bad" onclick="reset()">সব Order মুছুন</button><p class="mu">এই ডেটা শুধু এই ব্রাউজারে সেভ থাকে। নিয়মিত Backup নিন।</p></div>`}
+}
+function addP(){const n=$('#pn').value.trim(),pr=+$('#pp').value,st=+$('#ps').value;if(!n||!pr)return alert('নাম ও দাম দিন');
+ const f=$('#pf').files[0],push=img=>{P.push({id:Date.now(),name:n,cat:$('#pc').value,price:pr,stock:st||0,img:img||'dress1.jpg'});saveP();render()};
+ if(f){const r=new FileReader();r.onload=()=>{const im=new Image();im.onload=()=>{const c=document.createElement('canvas'),s=Math.min(1,500/im.width);c.width=im.width*s;c.height=im.height*s;c.getContext('2d').drawImage(im,0,0,c.width,c.height);push(c.toDataURL('image/jpeg',.7))};im.src=r.result};r.readAsDataURL(f)}else push($('#pu').value.trim())}
+function setPrice(id){const v=+$('#pr'+id).value;if(v<=0)return;P.find(p=>p.id===id).price=v;saveP();alert('দাম আপডেট হয়েছে ✓')}
+function delP(id){if(confirm('এই product মুছবেন?')){P=P.filter(p=>p.id!==id);saveP();render()}}
+function adj(id,n){const p=P.find(x=>x.id===id);p.stock=Math.max(0,p.stock+n);saveP();render()}
+function setStock(id){P.find(x=>x.id===id).stock=Math.max(0,+$('#st'+id).value||0);saveP();render()}
+function addO(){const n=$('#on').value.trim(),q=+$('#oq').value||1,p=P.find(x=>x.id==$('#op').value);if(!n||!p)return alert('নাম দিন');
+ O.push({id:Date.now(),name:n,phone:$('#oph').value,address:$('#oa').value,pid:p.id,qty:q,total:p.price*q,status:'pending',date:new Date().toISOString()});saveO();render()}
+function chPw(){const v=$('#np').value;if(v.length<4)return alert('কমপক্ষে ৪ অক্ষর');S('mm_pw',v);alert('পাসওয়ার্ড বদলেছে ✓')}
+function demo(){const names=['রিনা','সুমি','নাসরিন','ফাতেমা','মিম'];for(let i=0;i<25;i++){const p=P[i%P.length],q=1+i%2,d=new Date();d.setDate(d.getDate()-Math.floor(Math.random()*40));O.push({id:Date.now()+i,name:names[i%5],phone:'017000000'+i,address:'Khulna',pid:p.id,qty:q,total:p.price*q,status:i%7===0?'pending':'confirmed',date:d.toISOString()})}saveO();go('dash')}
+function dl(){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify({products:P,orders:O},null,1)],{type:'application/json'}));a.download='mimmart-backup.json';a.click()}
+function reset(){if(confirm('সব order মুছে যাবে!')){O=[];saveO();render()}}
+render();
+</script></body></html>
