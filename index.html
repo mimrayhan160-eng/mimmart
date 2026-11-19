@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mim Mart | Ladies Fashion Showroom</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: Arial, sans-serif; color: #333; line-height: 1.6; }
+header { background: #e91e8c; color: #fff; padding: 16px 40px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 10; }
+header h1 { font-size: 26px; letter-spacing: 1px; }
+nav a { color: #fff; text-decoration: none; margin-left: 24px; font-weight: bold; }
+nav a:hover { text-decoration: underline; }
+.hero { background: linear-gradient(135deg, #ffd1e8, #ff8fc7); text-align: center; padding: 100px 20px; }
+.hero h2 { font-size: 44px; color: #8a0f52; }
+.hero p { font-size: 20px; margin: 16px 0 28px; color: #5a0a35; }
+.btn { background: #e91e8c; color: #fff; padding: 14px 32px; border-radius: 30px; text-decoration: none; font-weight: bold; display: inline-block; }
+.btn:hover { background: #c2177a; }
+section { padding: 60px 40px; max-width: 1100px; margin: auto; }
+section h2 { text-align: center; color: #e91e8c; margin-bottom: 30px; font-size: 32px; }
+.categories, .products { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 24px; }
+.card { background: #fff0f7; border-radius: 16px; padding: 30px 20px; text-align: center; box-shadow: 0 4px 12px rgba(233,30,140,0.15); }
+.card h3 { color: #c2177a; margin-bottom: 8px; }
+.product img { width: 100%; height: 340px; object-fit: cover; border-radius: 12px; margin-bottom: 12px; }
+.price { color: #e91e8c; font-weight: bold; font-size: 18px; }
+.about { background: #fff0f7; max-width: none; }
+.about p { max-width: 800px; margin: auto; text-align: center; font-size: 18px; }
+.contact { text-align: center; }
+.contact p { margin: 8px 0; font-size: 18px; }
+footer { background: #8a0f52; color: #fff; text-align: center; padding: 20px; }
+@media (max-width: 600px) { header { flex-direction: column; } nav a { margin: 0 10px; } .hero h2 { font-size: 30px; } }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Mim Mart</h1>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#categories">Categories</a>
+    <a href="#products">New Arrivals</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+
+<div class="hero" id="home">
+  <h2>Elegant Fashion for Every Woman</h2>
+  <p>Discover the latest ladies dresses at Mim Mart</p>
+  <a class="btn" href="#products">Shop Now</a>
+</div>
+
+<section id="categories">
+  <h2>Our Categories</h2>
+  <div class="categories">
+    <div class="card"><h3>Three Piece</h3><p>Stylish sets for every occasion</p></div>
+    <div class="card"><h3>Kurti</h3><p>Comfortable daily wear</p></div>
+    <div class="card"><h3>Saree</h3><p>Traditional and party sarees</p></div>
+    <div class="card"><h3>Party Wear</h3><p>Look stunning at any event</p></div>
+  </div>
+</section>
+
+<section id="products">
+  <h2>New Arrivals</h2>
+  <div class="products">
+    <div class="card product"><img src="dress1.jpg" alt="Sky Blue Three Piece"><h3>Aganur Sky Blue Three Piece</h3><p class="price">Tk 2,450</p></div>
+    <div class="card product"><img src="dress2.jpg" alt="Orange Three Piece"><h3>Aganur Orange Three Piece</h3><p class="price">Tk 2,450</p></div>
+    <div class="card product"><img src="dress3.jpg" alt="Pink Three Piece"><h3>Aganur Pink Three Piece</h3><p class="price">Tk 2,450</p></div>
+  </div>
+</section>
+
+<section class="about" id="about">
+  <h2>About Mim Mart</h2>
+  <p>Mim Mart is a ladies fashion showroom offering quality dresses at fair prices. We bring you the latest designs, beautiful fabrics and friendly service, all under one roof.</p>
+</section>
+
+<section class="contact" id="contact">
+  <h2>Visit or Contact Us</h2>
+  <p>Address: Khulna Shopping Complex, Dak Bangla Mor, Khulna</p>
+  <p>Phone / WhatsApp: 01740-240628</p>
+  <p>Open: Every day, 10:00 AM to 9:00 PM</p>
+  <br>
+  <a class="btn" href="https://wa.me/8801740240628">Chat on WhatsApp</a>
+</section>
+
+<footer>&copy; 2026 Mim Mart. All rights reserved.</footer>
+
+</body>
+</html>
